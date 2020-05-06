@@ -6,6 +6,8 @@ import (
 	"math/rand"
 	"os"
 	"time"
+
+	"github.com/rs/xid"
 )
 
 const charset = "abcdefghijklmnopqrstuvwxyz" +
@@ -69,4 +71,12 @@ func ConvertStringToTime(reqDate string) time.Time {
 
 func MakeTimesLong() int64 {
 	return time.Now().UnixNano() / int64(time.Millisecond)
+}
+
+func GenerateUUID() string {
+
+	id := xid.New()
+	return id.String()
+	//  sf.Printf("github.com/rs/xid:              %s\n", id.String())
+
 }

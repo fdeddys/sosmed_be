@@ -35,13 +35,17 @@ func InitRouter() *gin.Engine {
 	var api *gin.RouterGroup
 
 	RestController := new(rest.RestController)
-	api = r.Group(version + "/elastic")
-	api.POST("/page/:page/count/:count", RestController.GetByFilterPaging)
+	api = r.Group(version + "/sosmed")
+
+	api.POST("/post/page/:page/count/:count", RestController.GetByFilterPaging)
 	api.POST("/post", RestController.AddPosting)
 	// api.POST("/post/:postId", RestController.getById())
 	api.POST("/like/:postId", RestController.PostLike)
-	// api.POST("/dislike:/postId", RestController.PostDislike)
+	api.POST("/dislike/:postId", RestController.PostDislike)
 
+	CommentController := new(rest.CommentController)
+	api.POST("/comment", CommentController.AddComment)
+	api.POST("/comment/:postId", CommentController.GetByFilterPaging)
 	return r
 
 }

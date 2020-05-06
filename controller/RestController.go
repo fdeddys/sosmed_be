@@ -25,7 +25,7 @@ func (controller *RestController) AddPosting(ctx *gin.Context) {
 	defer parent.Done()
 	res := model.Response{}
 
-	req := model.Posting{}
+	req := model.Post{}
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		fmt.Println("Request body error:", err)
 		res.Rc = constants.ERR_CODE_03
@@ -43,7 +43,7 @@ func (controller *RestController) AddPosting(ctx *gin.Context) {
 }
 
 func (controller *RestController) GetByFilterPaging(ctx *gin.Context) {
-	fmt.Println(">>> RestoControoler - Get All <<<")
+	fmt.Println(">>> Posting Controoler - Get All <<<")
 	parent := context.Background()
 	defer parent.Done()
 
@@ -81,10 +81,25 @@ func (controller *RestController) PostLike(ctx *gin.Context) {
 	// req := dto.RequesDto{}
 	// res := model.Response{}
 
-	postId := ctx.Param("postId")
+	postID := ctx.Param("postId")
 
-	// res = service.InitializeServiceInterface().LikePost(1, postId)
+	res := service.InitializeServiceInterface().LikePost(postID)
 
-	ctx.JSON(http.StatusOK, "post like "+postId)
+	ctx.JSON(http.StatusOK, res)
+
+}
+
+func (controller *RestController) PostDislike(ctx *gin.Context) {
+	parent := context.Background()
+	defer parent.Done()
+
+	// req := dto.RequesDto{}
+	// res := model.Response{}
+
+	postID := ctx.Param("postId")
+
+	res := service.InitializeServiceInterface().DislikePost(postID)
+
+	ctx.JSON(http.StatusOK, res)
 
 }
